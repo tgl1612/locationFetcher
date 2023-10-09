@@ -1,0 +1,14 @@
+version: '2'
+
+services:
+  postgres:
+    image: "postgres:12.7"
+    restart: always
+    ports:
+      - "5432:5432"
+    tmpfs:
+      - /var/lib/postgresql/data:rw
+    environment:
+      - POSTGRES_DB=location-fetcher
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=bops
