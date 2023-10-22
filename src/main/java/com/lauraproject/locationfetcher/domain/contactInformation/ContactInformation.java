@@ -1,28 +1,23 @@
 package com.lauraproject.locationfetcher.domain.contactInformation;
 
-import com.lauraproject.locationfetcher.domain.locationinformation.LocationInformation;
+import com.lauraproject.locationfetcher.api.contactinformation.ContactInformationDto;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 @Entity
 @Table(name = "t_contact_information")
-@Builder
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class ContactInformation {
@@ -46,4 +41,14 @@ public class ContactInformation {
     @Column(name = "location_id")
     private String locationId;
 
+    public static ContactInformation fromDto(ContactInformationDto dto) {
+        ContactInformation entity = new ContactInformation();
+        entity.setId(dto.getId());
+        entity.setFirstName(dto.getFirstName());
+        entity.setLastName(dto.getLastName());
+        entity.setEmail(dto.getEmail());
+        entity.setPhoneNumber(dto.getPhoneNumber());
+        entity.setContactType(dto.getContactType());
+        return entity;
+    }
 }

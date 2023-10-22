@@ -1,20 +1,21 @@
 package com.lauraproject.locationfetcher.domain.locationinformation;
 
+import com.lauraproject.locationfetcher.api.locationInformation.LocationInformationDto;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Table(name = "t_location_information")
-@Builder
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class LocationInformation {
@@ -50,4 +51,25 @@ public class LocationInformation {
     private boolean direct;
     @Column(name = "keywords")
     private String keywords;
+
+
+    public static LocationInformation fromDto(LocationInformationDto dto){
+
+        LocationInformation entity = new LocationInformation();
+        entity.setLocationId(dto.getLocationId());
+        entity.setLocationType(dto.getLocationType());
+        entity.setAddressLine1(dto.getAddressLine1());
+        entity.setAddressLine2(dto.getAddressLine2());
+        entity.setCity(dto.getCity());
+        entity.setPostCode(dto.getPostCode());
+        entity.setCountry(dto.getCountry());
+        entity.setPrice(dto.getPrice());
+        entity.setParking(dto.isParking());
+        entity.setPermitRequired(dto.isPermitRequired());
+        entity.setRamp(dto.isRamp());
+        entity.setLift(dto.isLift());
+        entity.setDirect(dto.isDirect());
+        entity.setKeywords(dto.getKeywords());
+        return entity;
+    }
 }

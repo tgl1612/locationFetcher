@@ -31,4 +31,4 @@ CREATE TABLE t_contact_information
 
 ALTER TABLE t_contact_information
 ADD CONSTRAINT LOCATION_ID_FK
-FOREIGN KEY (location_id) REFERENCES t_location_information;
+FOREIGN KEY (location_id) REFERENCES t_location_information ON DELETE CASCADE;
