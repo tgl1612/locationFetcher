@@ -1,7 +1,7 @@
 package com.lauraproject.locationfetcher.api.contactinformation;
 
-import com.lauraproject.locationfetcher.domain.contactInformation.ContactInformation;
-import com.lauraproject.locationfetcher.domain.contactInformation.ContactType;
+import com.lauraproject.locationfetcher.domain.contactinformation.ContactInformation;
+import com.lauraproject.locationfetcher.domain.contactinformation.ContactType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

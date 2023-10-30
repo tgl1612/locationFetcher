@@ -1,4 +1,4 @@
-package com.lauraproject.locationfetcher.domain.contactInformation;
+package com.lauraproject.locationfetcher.domain.contactinformation;
 
 public enum ContactType {
 

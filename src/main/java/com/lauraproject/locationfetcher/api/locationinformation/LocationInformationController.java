@@ -1,4 +1,4 @@
-package com.lauraproject.locationfetcher.api.locationInformation;
+package com.lauraproject.locationfetcher.api.locationinformation;
 
 import com.lauraproject.locationfetcher.domain.locationinformation.LocationInformation;
 import com.lauraproject.locationfetcher.domain.locationinformation.LocationInformationService;
@@ -22,9 +22,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class LocationInformationController {
 
     private LocationInformationService service;
+    private LocationInformationDtoValidator validator;
 
     @GetMapping()
     public List<LocationInformationDto> getAllLocations() {
+        log.info("Returning all locations");
         List<LocationInformation> entityList = service.findAllLocations();
         List<LocationInformationDto> dtoList = new ArrayList<>(entityList.size());
 
@@ -38,6 +40,7 @@ public class LocationInformationController {
     public LocationInformationDto getLocationByLocationId(
         @PathVariable(name = "locationId") String locationId
     ) {
+        log.info("Returning location by id: " + locationId);
         return LocationInformationDto.fromModel(service.findLocationByLocationId(locationId));
     }
 
@@ -45,15 +48,12 @@ public class LocationInformationController {
     public LocationInformationDto createLocationInformation(
         @RequestBody LocationInformationDto locationInformationDto
     ) {
-        //todo add logs
-        //todo add validation
-        //todo testing
-        //todo readme
-        //todo revise sets, lists, tree sets, what they are and when to use etc.
-        //todo revise TDD, BDD, DDD best practices
-        //todo write a kafka example to show experience with Kafka in github.
+
+        log.info("Creating new location");
+        validator.isValid(locationInformationDto);
         LocationInformation locationInformation = LocationInformation.fromDto(locationInformationDto);
         LocationInformation savedEntity = service.saveLocationInformation(locationInformation);
+        log.info("New location created with id: " + savedEntity.getLocationId());
         return LocationInformationDto.fromModel(savedEntity);
     }
 
@@ -62,8 +62,9 @@ public class LocationInformationController {
         @PathVariable(name = "locationId") String locationId,
         @RequestBody LocationInformationDto locationInformationDto
     ) {
+        log.info("Updating location with id: " + locationId);
         service.findLocationByLocationId(locationId);
-        //todo validation on dto
+        validator.isValid(locationInformationDto);
         LocationInformation entityToUpdate = LocationInformation.fromDto(locationInformationDto);
         entityToUpdate.setLocationId(locationId);
         LocationInformation updatedEntity = service.saveLocationInformation(entityToUpdate);
@@ -75,6 +76,7 @@ public class LocationInformationController {
     public void deleteLocationInformation(
         @PathVariable(name = "locationId") String locationId
     ) {
+        log.info("Deleting location with id: " + locationId);
         service.findLocationByLocationId(locationId);
         service.deleteLocationInformation(locationId);
     }

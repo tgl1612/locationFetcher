@@ -1,6 +1,6 @@
 package com.lauraproject.locationfetcher.domain.locationinformation;
 
-import com.lauraproject.locationfetcher.api.locationInformation.LocationInformationDto;
+import com.lauraproject.locationfetcher.api.locationinformation.LocationInformationDto;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -56,7 +56,6 @@ public class LocationInformation {
     public static LocationInformation fromDto(LocationInformationDto dto){
 
         LocationInformation entity = new LocationInformation();
-        entity.setLocationId(dto.getLocationId());
         entity.setLocationType(dto.getLocationType());
         entity.setAddressLine1(dto.getAddressLine1());
         entity.setAddressLine2(dto.getAddressLine2());

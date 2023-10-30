@@ -1,4 +1,4 @@
-package com.lauraproject.locationfetcher.domain.contactInformation;
+package com.lauraproject.locationfetcher.domain.contactinformation;
 
 import com.lauraproject.locationfetcher.api.contactinformation.ContactInformationDto;
 import javax.persistence.Column;

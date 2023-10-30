@@ -1,7 +1,6 @@
-package com.lauraproject.locationfetcher.api.locationInformation;
+package com.lauraproject.locationfetcher.api.locationinformation;
 
 import com.lauraproject.locationfetcher.domain.locationinformation.LocationInformation;
-import javax.persistence.Column;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -44,7 +43,5 @@ public class LocationInformationDto {
         dto.setKeywords(entity.getKeywords());
         return dto;
     }
-
-
 
 }

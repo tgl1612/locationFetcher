@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 /**
- * Use this global handler to nicely wrap exceptions thrown by the application code.
+ * Global handler to nicely wrap exceptions thrown by the application code.
  */
 @Slf4j
 @ControllerAdvice
@@ -20,6 +20,16 @@ public class GlobalDefaultExceptionHandler {
         err.setMessage(ex.getMessage());
         err.setCode(Integer.toString(HttpStatus.NOT_FOUND.value()));
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
+            .body(err);
+    }
+
+    @ExceptionHandler(ValidationException.class)
+    public ResponseEntity<?> validationException(ValidationException ex){
+        log(ex);
+        var err = new AppError();
+        err.setMessage(ex.getMessage());
+        err.setCode(Integer.toString(HttpStatus.BAD_REQUEST.value()));
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
             .body(err);
     }
 

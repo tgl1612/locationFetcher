@@ -1,4 +1,4 @@
-package com.lauraproject.locationfetcher.domain.contactInformation;
+package com.lauraproject.locationfetcher.domain.contactinformation;
 
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;

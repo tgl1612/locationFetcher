@@ -1,7 +1,7 @@
 package com.lauraproject.locationfetcher.api.contactinformation;
 
-import com.lauraproject.locationfetcher.domain.contactInformation.ContactInformation;
-import com.lauraproject.locationfetcher.domain.contactInformation.ContactInformationService;
+import com.lauraproject.locationfetcher.domain.contactinformation.ContactInformation;
+import com.lauraproject.locationfetcher.domain.contactinformation.ContactInformationService;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -22,11 +22,13 @@ import org.springframework.web.bind.annotation.RestController;
 public class ContactInformationController {
 
     private ContactInformationService service;
+    private ContactInformationDtoValidator validator;
 
     @GetMapping("/location/{locationId}")
     public List<ContactInformationDto> getAllContactInformationByLocationId(
         @PathVariable(name = "locationId") String locationId
     ) {
+        log.info("Returning all contact information for location with id: " + locationId);
         List<ContactInformation> entityList = service.findAllContactInformationByLocationId(locationId);
         List<ContactInformationDto> dtoList = new ArrayList<>(entityList.size());
 
@@ -36,12 +38,17 @@ public class ContactInformationController {
         return dtoList;
     }
 
-    @PostMapping()
-    public ContactInformationDto createContactInformation(
+    @PostMapping("/location/{locationId}")
+    public ContactInformationDto createContactInformationForLocation(
+        @PathVariable String locationId,
         @RequestBody ContactInformationDto contactInformationDto
     ) {
+        log.info("Creating new contact information for location with id: " + locationId);
+        validator.isValid(contactInformationDto);
         ContactInformation contactInformation = ContactInformation.fromDto(contactInformationDto);
+        contactInformation.setLocationId(locationId);
         ContactInformation savedEntity = service.saveContactInformation(contactInformation);
+        log.info("New contact information created with id: {} for location with id: {}", savedEntity.getId(), locationId);
         return ContactInformationDto.fromModel(savedEntity);
     }
 
@@ -50,10 +57,13 @@ public class ContactInformationController {
         @PathVariable(name = "contactId") String contactId,
         @RequestBody ContactInformationDto contactInformationDto
     ) {
-        service.findContactInformationById(contactId);
-        //todo validation on dto
+        log.info("Updating contactInformation with id: " + contactId);
+        ContactInformation existingEntity = service.findContactInformationById(contactId);
+        validator.isValid(contactInformationDto);
+
         ContactInformation entityToUpdate = ContactInformation.fromDto(contactInformationDto);
         entityToUpdate.setId(contactId);
+        entityToUpdate.setLocationId(existingEntity.getLocationId());
 
         ContactInformation updatedEntity = service.saveContactInformation(entityToUpdate);
         return ContactInformationDto.fromModel(updatedEntity);
@@ -63,6 +73,7 @@ public class ContactInformationController {
     public void deleteContactInformation(
         @PathVariable(name = "contactId") String contactId
     ) {
+        log.info("Deleting contactInformation with id: " + contactId);
         service.findContactInformationById(contactId);
         service.deleteContactInformation(contactId);
     }
