@@ -43,7 +43,6 @@ public class ContactInformation {
 
     public static ContactInformation fromDto(ContactInformationDto dto) {
         ContactInformation entity = new ContactInformation();
-        entity.setId(dto.getId());
         entity.setFirstName(dto.getFirstName());
         entity.setLastName(dto.getLastName());
         entity.setEmail(dto.getEmail());
